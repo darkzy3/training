@@ -1,11 +1,17 @@
-FROM debian:latest
+# Utiliser une image de base Python officielle
+FROM python:3.8
 
-LABEL author="LZI"
-LABEL description="DockerApp"
-LABEL version="1.0"
+# Définir le répertoire de travail dans le conteneur
+WORKDIR /app
 
-RUN apt-get update && apt-get install -y nginx
+# Copier les fichiers dans le conteneur
+COPY . /app
 
-EXPOSE 80/tcp
+# Installer les dépendances de l'application
+RUN pip install -r requirements.txt
 
-CMD [ "nginx", "-g", "daemon off;" ]
+# Exposer le port sur lequel l'application s'exécute
+EXPOSE 5000
+
+# Définir la commande pour exécuter l'application
+CMD ["python", "app.py"]
